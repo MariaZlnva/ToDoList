@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   deleteTask,
   resetSearchList,
-  setIsEdit,
+  // setIsEdit,
   statusTask,
 } from "../../redux/taskSlice";
 
@@ -34,10 +34,10 @@ const ToDoList: React.FC = () => {
   const handleDone = (index: number) => {
     dispatch(statusTask(index));
   };
-  const handleEdit = ({ value, key }: { value: string; key: number }) => {
-    setValue(value);
-    dispatch(setIsEdit());
-  };
+  // const handleEdit = ({ value, key }: { value: string; key: number }) => {
+  //   setValue(value);
+  //   dispatch(setIsEdit());
+  // };
   const handleSave = () => {};
 
   const listToRender = searchTaskList.length ? searchTaskList : taskList;
@@ -75,7 +75,7 @@ const ToDoList: React.FC = () => {
                 <button
                   type="button"
                   className="todo-list__btn-edit"
-                  onClick={() => handleEdit(item)}
+                  // onClick={() => handleEdit(item)}
                 >
                   <img
                     src={edit}
