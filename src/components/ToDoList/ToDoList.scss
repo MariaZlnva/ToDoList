@@ -20,9 +20,21 @@
       color: $color-grey;
     }
   }
+
+  &__input{
+    color: $color-blue-800;
+    padding: 12px 10px;
+    border-bottom: 0.5px solid $color-blue-700;
+    &:focus {
+      outline: none;
+      
+    }
+  }
+
   &__btn {
     &_image {
       width: 15px;
+      opacity: 0.8;
       transition: opacity 0.2s ease-in-out;
 
       &:hover {
@@ -30,8 +42,6 @@
         //
       }
     }
-  }
-  &__btn-edit {
   }
 
   &__empty{

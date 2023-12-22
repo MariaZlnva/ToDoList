@@ -1,22 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { IChangeTask, ITask, TaskType } from './types';
 
-export interface ITask {
-  task: string;
-  isDone: boolean;
-  date: string;
-}
-export type TaskType = {
-  taskList: ITask[];
-  searchTaskList: ITask[];
-  isEdit: boolean
-}
+
 
 const initialState: TaskType = {
     taskList: [],
     searchTaskList: [],
-    isEdit: false
+    isEdit: false,
+    isError: false
 }
 export const taskSlice = createSlice({
     name: 'task',
@@ -51,16 +44,24 @@ export const taskSlice = createSlice({
       resetSearchList: (state) => {
         state.searchTaskList = []
       },
-      setIsEdit: (state) => {
-        state.isEdit = true
+      setIsEdit: (state, action: PayloadAction<number>) => {
+        state.taskList[action.payload].isEdit = true
+        // state.isEdit = true
+      },
+      changeTask: (state, action: PayloadAction<IChangeTask>) => {
+        state.taskList[action.payload.index].task = action.payload.value; 
+        state.taskList[action.payload.index].isEdit = false
+      }, 
+      setIsError: (state, action: PayloadAction<boolean>) => {
+        state.isError = action.payload
       }
     },
   })
   
   // Action creators are generated for each case reducer function
-  export const { addTask, deleteTask, statusTask, sortTask, searchTask, resetSearchList, sortTaskDate, setIsEdit } = taskSlice.actions
+  export const { addTask, deleteTask, statusTask, sortTask, searchTask, resetSearchList, sortTaskDate, setIsEdit, changeTask, setIsError } = taskSlice.actions
   export const taskList = (state: RootState) => state.task.taskList
   export const searchTaskList = (state: RootState) => state.task.searchTaskList
-  export const isEdit = (state: RootState) => state.task.isEdit
+  export const isError = (state: RootState) => state.task.isError
 
   export default taskSlice.reducer

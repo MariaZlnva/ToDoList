@@ -39,11 +39,7 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: $color-blue-700;
-        // font-family: Inter, "Roboto", Helvetica, Arial, sans-serif;
-        // font-size: 12px;
-        // font-weight: 400;
-        // color: #48c010;
-        // line-height: 130%;
+
     }
   }
 .header {
@@ -53,6 +49,10 @@
 
   &__title {
   @include font-sans($textL, $color-dark-grey, 700, 130%);
+  background: linear-gradient(to right, $color-blue-700 16.14%, $color-black-700 98.36%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $color-blue-700;
 
   }
   &__image {

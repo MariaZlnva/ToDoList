@@ -8,8 +8,9 @@
   &__label {
     display: flex;
     gap: 10px;
-  }
-
+    position: relative;
+  } 
+  
   &__input {
     padding: 5px 8px;
     height: 40px;
@@ -22,11 +23,27 @@
       border: 0.5px solid $color-black-700;
     }
   }
+&__image{
+  position: absolute;
+  right: 87px;
+  top: 13px;
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+  &:hover{
+    opacity: 0.5;
+  }
+}
+ 
+  &__error {
+    padding: 5px 8px;
+    color: $color-red;
+  }
 
   &__btn-add {
     border-radius: 50px;
     background-color: $color-light-blue;
-    width: 70px;
+    width: 80px;
     transition: background-color 0.2s ease-in-out;
 
     &:hover {
@@ -52,15 +69,4 @@
     }
   }
 
-  &__btn-search {
-  }
-
-  &__btn-reset {
-  }
-
-  &__btn-sort-name {
-  }
-
-  &__btn-sort-date {
-  }
 }
