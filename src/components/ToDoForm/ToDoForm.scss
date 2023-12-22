@@ -3,7 +3,7 @@
 .todo-form {
   @include font-sans($textS, $color-dark-grey, 500, 130%);
   width: 100%;
-  padding: 50px 0;
+  padding: 50px 0 0;
 
   &__label {
     display: flex;
