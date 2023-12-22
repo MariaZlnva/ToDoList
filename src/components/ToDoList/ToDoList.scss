@@ -1,0 +1,38 @@
+@import "../Shared/variables";
+@import "../Shared/mixins";
+
+.todo-list {
+  @include font-sans($textS, $color-dark-grey, 400, 130%);
+  padding: 0;
+
+
+  &__item {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 10px 1fr 30px 30px;
+  }
+  &__text {
+    border-bottom: 0.5px solid $color-light-gray;
+    &_checked {
+      text-decoration: line-through;
+      color: $color-grey;
+    }
+  }
+  &__btn {
+    &_image {
+      width: 15px;
+      transition: opacity 0.2s ease-in-out;
+
+      &:hover {
+        opacity: 0.4;
+        //
+      }
+    }
+  }
+  &__btn-edit {
+  }
+
+  &__empty{
+    @include font-sans($textXS, $color-grey-blue, 400, 130%);
+  }
+}

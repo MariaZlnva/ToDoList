@@ -1,0 +1,66 @@
+@import "../Shared/variables";
+@import "../Shared/mixins";
+.todo-form {
+  @include font-sans($textS, $color-dark-grey, 500, 130%);
+  width: 100%;
+  padding: 50px 0;
+
+  &__label {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__input {
+    padding: 5px 8px;
+    height: 40px;
+    border-radius: 8px;
+    width: 100%;
+    border: 0.5px solid $color-light-gray;
+
+    &:focus {
+      outline: none;
+      border: 0.5px solid $color-black-700;
+    }
+  }
+
+  &__btn-add {
+    border-radius: 50px;
+    background-color: $color-light-blue;
+    width: 70px;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: $color-blue-600;
+    }
+  }
+
+  &__wrap {
+    @include font-sans($textXS, $color-green-600, 400, 130%);
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    padding: 30px 0;
+    justify-content: center;
+    gap: 5px;
+  }
+  &__btn_to-list {
+    padding: 8px 5px;
+    color: $color-blue-700;
+
+    &:hover {
+      color: $light-blue;
+      transition: color 0.2s ease-in-out;
+    }
+  }
+
+  &__btn-search {
+  }
+
+  &__btn-reset {
+  }
+
+  &__btn-sort-name {
+  }
+
+  &__btn-sort-date {
+  }
+}
