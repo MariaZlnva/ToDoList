@@ -2,15 +2,16 @@ export interface ITask {
     task: string;
     isDone: boolean;
     date: string;
-    isEdit?: boolean
+    isEdit: boolean
   }
   export type TaskType = {
     taskList: ITask[];
-    searchTaskList: ITask[];
     isEdit: boolean;
-    isError: boolean
+    isError: boolean;
+    valueInput: string;
+    valueTask: string;
   }
 export interface IChangeTask {
     index: number
-    value: string
+    valueTask: string
 }

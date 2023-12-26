@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ToDoForm.scss";
 import plusIcon from "../../assets/white-plus.svg";
 import clear from "../../assets/clear-icon.svg";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   addTask,
-  resetSearchList,
-  searchTask,
   setIsError,
   sortTask,
   sortTaskDate,
+  setIsValueInput,
 } from "../../redux/taskSlice";
 
 const ToDoForm: React.FC = () => {
   const [value, setValue] = useState<string>("");
-  const searchTaskList = useAppSelector((state) => state.task.searchTaskList);
   const taskList = useAppSelector((state) => state.task.taskList);
   const isError = useAppSelector((state) => state.task.isError);
+  const valueInput = useAppSelector((state) => state.task.valueInput);
 
+useEffect(() => {
+  if(valueInput === '') setValue('')
+},[valueInput])
   const dispatch = useAppDispatch();
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setValue(evt.target.value);
@@ -28,18 +30,17 @@ const ToDoForm: React.FC = () => {
     const date = new Date();
     const taskDate = date.toLocaleString();
     if (value === "") return;
-    dispatch(addTask({ task:value, isDone: false, date: taskDate }));
+    dispatch(addTask({ task:value, isDone: false, date: taskDate, isEdit: false }));
     setValue("");
   };
 
   const handleSearch = () => {
     if(value === '') return
-    dispatch(searchTask(value));
-    if(searchTaskList.length === 0) return dispatch(setIsError(true));
+    dispatch(setIsValueInput(value));
   };
 
   const handleReset = () => {
-    dispatch(resetSearchList());
+    dispatch(setIsValueInput(''));
     setValue("");
     dispatch(setIsError(false));
   };
@@ -68,9 +69,9 @@ const ToDoForm: React.FC = () => {
           <img src={plusIcon} alt="Белый плюсик" />
         </button>
       </label>
-      {(isError && searchTaskList.length ===0) && <span className="todo-form__error">Ничего не найдено.</span>}
+      {(isError && taskList.length === 0) && <span className="todo-form__error">Ничего не найдено.</span>}
 
-      {taskList.length || searchTaskList.length ? (
+      {taskList.length > 0 ? (
         <div className="todo-form__wrap">
           <button
             className="todo-form__btn_to-list"
@@ -79,15 +80,6 @@ const ToDoForm: React.FC = () => {
           >
             Найти в списке
           </button>
-          {searchTaskList.length ? (
-            <button
-              className="todo-form__btn_to-list"
-              type="button"
-              onClick={handleReset}
-            >
-              Отменить поиск
-            </button>
-          ) : null}
           <button
             className="todo-form__btn_to-list"
             type="button"

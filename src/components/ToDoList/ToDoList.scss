@@ -5,7 +5,6 @@
   @include font-sans($textS, $color-dark-grey, 500, 130%);
   padding: 0;
 
-
   &__item {
     display: grid;
     gap: 10px;
@@ -21,13 +20,12 @@
     }
   }
 
-  &__input{
+  &__input {
     color: $color-blue-800;
     padding: 12px 10px;
     border-bottom: 0.5px solid $color-blue-700;
     &:focus {
       outline: none;
-      
     }
   }
 
@@ -44,7 +42,11 @@
     }
   }
 
-  &__empty{
+  &__empty {
     @include font-sans($textXS, $color-grey-blue, 400, 130%);
+  }
+
+  &__not-found {
+    @include font-sans($textS, $color-red, 500, 130%);
   }
 }

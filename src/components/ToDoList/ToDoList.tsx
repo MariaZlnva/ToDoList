@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ToDoList.scss";
 import edit from "../../assets/edit-icon.svg";
 import del from "../../assets/delete-icon1.svg";
@@ -8,40 +8,45 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   changeTask,
   deleteTask,
-  resetSearchList,
   setIsEdit,
+  setIsValueInput,
   statusTask,
 } from "../../redux/taskSlice";
 
 const ToDoList: React.FC = () => {
-  const [value, setValue] = useState<string>("");
-
+  const [valueTask, setValueTask] = React.useState<string>("");
+  const valueInput = useAppSelector((state) => state.task.valueInput);
   const taskList = useAppSelector((state) => state.task.taskList);
-  const searchTaskList = useAppSelector((state) => state.task.searchTaskList);
   const dispatch = useAppDispatch();
   const handleDelete = (index: number) => {
-    if (searchTaskList.length === 0) return dispatch(deleteTask(index));
-    else {
-      dispatch(deleteTask(index));
-      dispatch(resetSearchList());
-    }
+    dispatch(deleteTask(index));
   };
   const handleChangeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(evt.target.value);
+    setValueTask(evt.target.value);
   };
 
   const handleDone = (index: number) => {
     dispatch(statusTask(index));
   };
   const handleEdit = ({ index, task }: { index: number; task: string }) => {
-    setValue(task);
+    console.log(index, task);
+    setValueTask(task);
     dispatch(setIsEdit(index));
   };
   const handleSaveEdit = ({ index }: { index: number }) => {
-    dispatch(changeTask({ index, value }));
+    console.log(valueTask);
+    dispatch(changeTask({ index, valueTask }));
+    dispatch(setIsValueInput(""));
+    setValueTask('')
   };
 
-  const listToRender = searchTaskList.length ? searchTaskList : taskList;
+  const listToRender = taskList.filter((item) => {
+    if (valueInput) {
+      return item.task.toLowerCase().includes(valueInput.toLowerCase().trim());
+    } else return item;
+  });
+
+  console.log(listToRender);
   return (
     <div>
       <ul className="todo-list">
@@ -52,12 +57,12 @@ const ToDoList: React.FC = () => {
                 type="checkbox"
                 name="status"
                 checked={item.isDone}
-                onClick={() => handleDone(index)}
+                onChange={() => handleDone(index)}
               ></input>
 
               {item.isEdit ? (
                 <input
-                  value={value || ""}
+                  value={valueTask || ""}
                   name="todo"
                   onChange={handleChangeValue}
                   autoFocus
@@ -75,10 +80,7 @@ const ToDoList: React.FC = () => {
                 </p>
               )}
               {item.isEdit ? (
-                <button
-                  type="button"
-                  onClick={() => handleSaveEdit({ index })}
-                >
+                <button type="button" onClick={() => handleSaveEdit({ index })}>
                   <img
                     src={save}
                     className="todo-list__btn_image"
@@ -110,7 +112,8 @@ const ToDoList: React.FC = () => {
               </button>
             </li>
           ))
-        ) : (
+        ) : (listToRender.length === 0 && valueInput !== '') ? 
+          <p className="todo-list__not-found">Ничего не найдено.</p> : (
           <p className="todo-list__empty">Список задач пуст.</p>
         )}
       </ul>
